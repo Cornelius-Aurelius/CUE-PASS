@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>CUE PASS — Colour Blind Football Game</title>
+
   <style>
     :root {
-      --bg: #06140d;
-      --pitch-a: #0f3621;
+      --bg: #06130c;
+      --pitch-a: #103820;
       --pitch-b: #0b2a19;
       --line: rgba(255,255,255,.74);
-      --card: rgba(250,250,244,.96);
+      --card: rgba(250,250,244,.97);
       --ink: #101414;
-      --soft: rgba(255,255,255,.22);
-      --shadow: rgba(0,0,0,.35);
-      --player-size: clamp(96px, 12vw, 132px);
-      --me-size: clamp(98px, 11.5vw, 128px);
+      --shadow: rgba(0,0,0,.36);
+      --player-size: clamp(100px, 12vw, 138px);
+      --self-size: clamp(98px, 11vw, 128px);
     }
 
     * {
@@ -28,8 +28,8 @@
       margin: 0;
       min-height: 100%;
       background:
-        radial-gradient(circle at 50% 8%, rgba(36, 98, 57, .55), transparent 42%),
-        linear-gradient(180deg, #082213, var(--bg));
+        radial-gradient(circle at 50% 6%, rgba(47, 124, 70, .55), transparent 43%),
+        linear-gradient(180deg, #092315, var(--bg));
       color: #fff;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
@@ -48,7 +48,7 @@
     }
 
     .app {
-      width: min(100%, 940px);
+      width: min(100%, 960px);
       min-height: calc(100svh - 20px);
       display: grid;
       grid-template-rows: auto auto 1fr auto;
@@ -57,7 +57,7 @@
     }
 
     .top {
-      width: min(100%, 720px);
+      width: min(100%, 740px);
       justify-self: center;
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -77,7 +77,7 @@
       text-shadow: 0 2px 8px rgba(0,0,0,.35);
     }
 
-    .brand span:first-child {
+    .brand-ball {
       width: 28px;
       height: 28px;
       border-radius: 50%;
@@ -121,7 +121,7 @@
 
     .cue-zone {
       justify-self: center;
-      width: min(100%, 720px);
+      width: min(100%, 740px);
       display: grid;
       place-items: center;
       position: relative;
@@ -129,22 +129,21 @@
     }
 
     .cue-card {
-      width: min(90vw, 330px);
-      min-height: 92px;
-      border-radius: 26px;
+      width: min(94vw, 380px);
+      min-height: 98px;
+      border-radius: 27px;
       background: var(--card);
       color: var(--ink);
       display: grid;
-      grid-template-columns: 54px 1fr 54px;
+      grid-template-columns: 54px 1fr 58px;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       padding: 8px 10px;
       border: 4px solid #fff;
       box-shadow: 0 16px 35px rgba(0,0,0,.26);
     }
 
-    .cue-type,
-    .hint-btn {
+    .cue-type {
       width: 44px;
       height: 44px;
       border-radius: 16px;
@@ -158,27 +157,73 @@
     }
 
     .hint-btn {
-      font-size: 23px;
-      transition: transform .18s ease, filter .18s ease;
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      border: 2.5px solid #101414;
+      background: rgba(255,255,255,.92);
+      color: #101414;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.18),
+        inset 0 0 0 2px rgba(255,255,255,.6);
+      opacity: .86;
+      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+      animation: hintSoftPulse 2.8s ease-in-out infinite;
+    }
+
+    .hint-btn::before {
+      content: "?";
+      position: absolute;
+      right: -5px;
+      top: -6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #101414;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 1000;
+      font-size: 12px;
+      border: 2px solid #fff;
+    }
+
+    .hint-btn::after {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border-radius: 22px;
+      border: 2px solid rgba(255,255,255,.42);
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .hint-btn:hover,
+    .hint-btn:focus-visible {
+      opacity: 1;
+      box-shadow:
+        0 8px 18px rgba(0,0,0,.24),
+        0 0 0 4px rgba(255,255,255,.28);
     }
 
     .hint-btn:active {
-      transform: scale(.93);
-    }
-
-    .hint-btn.glow {
-      animation: clueGlow 1.2s ease-in-out infinite;
+      transform: scale(.94);
+      opacity: 1;
     }
 
     .cue-main {
-      min-height: 72px;
+      min-height: 78px;
       display: grid;
       place-items: center;
     }
 
     .field-wrap {
       justify-self: center;
-      width: min(100%, 720px);
+      width: min(100%, 740px);
       display: grid;
       place-items: center;
     }
@@ -186,8 +231,8 @@
     .pitch {
       position: relative;
       width: 100%;
-      height: min(58svh, 500px);
-      min-height: 430px;
+      height: min(58svh, 515px);
+      min-height: 448px;
       border-radius: 28px;
       overflow: hidden;
       background:
@@ -233,7 +278,7 @@
       left: var(--x);
       top: var(--y);
       width: var(--player-size);
-      height: calc(var(--player-size) * 1.28);
+      height: calc(var(--player-size) * 1.35);
       transform: translate(-50%, -50%);
       display: grid;
       place-items: center;
@@ -249,15 +294,9 @@
       outline-offset: 4px;
     }
 
-    .player-btn.dim {
-      opacity: .54;
-      filter: grayscale(.25) drop-shadow(0 12px 10px rgba(0,0,0,.28));
-    }
-
     .player-btn.target-glow {
-      opacity: 1;
       filter:
-        drop-shadow(0 0 14px rgba(255,255,255,.95))
+        drop-shadow(0 0 16px rgba(255,255,255,.96))
         drop-shadow(0 14px 11px rgba(0,0,0,.34));
     }
 
@@ -281,18 +320,19 @@
       position: absolute;
       bottom: 0;
       width: 74%;
-      height: 12%;
+      height: 11%;
       border-radius: 50%;
       background: rgba(0,0,0,.32);
       filter: blur(3px);
     }
 
+    /* Players are shown from behind, so shirt numbers sit on the back. */
     .head {
       position: absolute;
       left: 50%;
-      top: 4%;
+      top: 3%;
       transform: translateX(-50%);
-      width: 38%;
+      width: 39%;
       aspect-ratio: 1;
       border-radius: 50%;
       background: #bd8d6d;
@@ -303,24 +343,17 @@
     .skin-light { background: #d2a37f; }
     .skin-deep { background: #7e5039; }
 
-    .eyes {
+    .neck {
       position: absolute;
       left: 50%;
-      top: 53%;
+      bottom: -11%;
+      width: 28%;
+      height: 19%;
       transform: translateX(-50%);
-      width: 46%;
-      height: 8%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .eyes::before,
-    .eyes::after {
-      content: "";
-      width: 26%;
-      aspect-ratio: 1;
-      background: #101414;
-      border-radius: 50%;
+      background: inherit;
+      border-left: 3px solid #101414;
+      border-right: 3px solid #101414;
+      z-index: -1;
     }
 
     .hair {
@@ -334,14 +367,14 @@
 
     .hair-flat {
       width: 92%;
-      height: 34%;
-      border-radius: 24px 24px 8px 8px;
+      height: 35%;
+      border-radius: 24px 24px 9px 9px;
       top: -10%;
     }
 
     .hair-spike {
       width: 86%;
-      height: 42%;
+      height: 43%;
       background: transparent;
       top: -23%;
     }
@@ -356,7 +389,7 @@
 
     .hair-band {
       width: 95%;
-      height: 23%;
+      height: 24%;
       border-radius: 999px;
       top: 10%;
     }
@@ -373,16 +406,30 @@
       left: 50%;
       top: 34%;
       transform: translateX(-50%);
-      width: 63%;
+      width: 68%;
       height: 45%;
       border-radius: 21% 21% 29% 29%;
       background: #e6e6e6;
       border: 4px solid #101414;
-      box-shadow: inset 0 0 0 4px rgba(255,255,255,.25);
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,.24);
       overflow: hidden;
       display: grid;
       place-items: center;
       z-index: 3;
+    }
+
+    .shirt::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 32%;
+      height: 14%;
+      transform: translateX(-50%);
+      border-radius: 0 0 999px 999px;
+      background: #101414;
+      z-index: 2;
+      opacity: .9;
     }
 
     .kit-light { background: #e8e3d6; }
@@ -400,11 +447,11 @@
     }
 
     .pattern-stripes::before {
-      background: repeating-linear-gradient(90deg, transparent 0 11px, rgba(0,0,0,.44) 11px 19px);
+      background: repeating-linear-gradient(90deg, transparent 0 11px, rgba(0,0,0,.42) 11px 19px);
     }
 
     .pattern-hoops::before {
-      background: repeating-linear-gradient(0deg, transparent 0 12px, rgba(0,0,0,.44) 12px 20px);
+      background: repeating-linear-gradient(0deg, transparent 0 12px, rgba(0,0,0,.42) 12px 20px);
     }
 
     .pattern-sash::before {
@@ -413,48 +460,46 @@
 
     .pattern-check::before {
       background:
-        linear-gradient(45deg, rgba(0,0,0,.45) 25%, transparent 25% 75%, rgba(0,0,0,.45) 75%),
-        linear-gradient(45deg, rgba(0,0,0,.45) 25%, transparent 25% 75%, rgba(0,0,0,.45) 75%);
+        linear-gradient(45deg, rgba(0,0,0,.44) 25%, transparent 25% 75%, rgba(0,0,0,.44) 75%),
+        linear-gradient(45deg, rgba(0,0,0,.44) 25%, transparent 25% 75%, rgba(0,0,0,.44) 75%);
       background-size: 18px 18px;
       background-position: 0 0, 9px 9px;
     }
 
-    .num {
+    .back-number {
       position: relative;
-      z-index: 3;
-      width: 60%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: #fff;
-      color: #101414;
-      border: 3.5px solid #101414;
-      display: grid;
-      place-items: center;
+      z-index: 4;
+      color: #fff;
       font-weight: 1000;
-      font-size: calc(var(--player-size) * .23);
-      line-height: 1;
+      font-size: calc(var(--player-size) * .34);
+      line-height: .82;
+      letter-spacing: -.05em;
+      -webkit-text-stroke: 3px #101414;
+      text-shadow:
+        0 4px 0 #101414,
+        0 0 8px rgba(255,255,255,.45);
     }
 
     .band {
       position: absolute;
       top: 31%;
-      width: 18%;
-      height: 43%;
+      width: 19%;
+      height: 44%;
       border-radius: 999px;
       background: #101414;
       border: 3px solid #fff;
       z-index: 5;
     }
 
-    .band-left { left: -8%; }
-    .band-right { right: -8%; }
+    .band-left { left: -9%; }
+    .band-right { right: -9%; }
 
     .legs {
       position: absolute;
       left: 50%;
       bottom: 7%;
       transform: translateX(-50%);
-      width: 52%;
+      width: 55%;
       height: 36%;
       z-index: 2;
     }
@@ -462,32 +507,34 @@
     .leg {
       position: absolute;
       top: 0;
-      width: 32%;
-      height: 78%;
+      width: 34%;
+      height: 77%;
       border-radius: 999px;
       background: #101414;
-      border: 3px solid rgba(255,255,255,.92);
+      border: 3px solid rgba(255,255,255,.94);
     }
 
-    .leg.l { left: 11%; transform: rotate(7deg); }
-    .leg.r { right: 11%; transform: rotate(-7deg); }
+    .leg.l { left: 8%; transform: rotate(7deg); }
+    .leg.r { right: 8%; transform: rotate(-7deg); }
 
     .boot {
       position: absolute;
-      bottom: -12%;
-      width: 155%;
-      height: 26%;
+      bottom: -17%;
+      width: 178%;
+      height: 35%;
       background: #fff;
-      border: 3px solid #101414;
+      border: 4px solid #101414;
       border-radius: 999px;
+      overflow: hidden;
     }
 
-    .leg.l .boot { left: -50%; transform: rotate(-7deg); }
-    .leg.r .boot { right: -50%; transform: rotate(7deg); }
+    .leg.l .boot { left: -62%; transform: rotate(-7deg); }
+    .leg.r .boot { right: -62%; transform: rotate(7deg); }
 
     .boots-dots .boot::after,
     .boots-stripes .boot::after,
-    .boots-half .boot::after {
+    .boots-half .boot::after,
+    .boots-cross .boot::after {
       content: "";
       position: absolute;
       inset: 2px;
@@ -495,27 +542,41 @@
     }
 
     .boots-dots .boot::after {
-      background: radial-gradient(circle, #101414 0 2px, transparent 2.2px) 0 0/8px 8px;
+      background: radial-gradient(circle, #101414 0 3px, transparent 3.3px) 0 0/11px 11px;
     }
 
     .boots-stripes .boot::after {
-      background: repeating-linear-gradient(90deg, #101414 0 3px, transparent 3px 7px);
+      background: repeating-linear-gradient(90deg, #101414 0 5px, transparent 5px 10px);
     }
 
     .boots-half .boot::after {
       background: linear-gradient(90deg, #101414 0 50%, transparent 50% 100%);
     }
 
+    .boots-cross .boot::after {
+      background:
+        linear-gradient(45deg, transparent 0 40%, #101414 40% 60%, transparent 60%),
+        linear-gradient(-45deg, transparent 0 40%, #101414 40% 60%, transparent 60%);
+    }
+
     .feature-pulse {
       animation: featurePulse 1.05s ease-in-out infinite;
+      z-index: 20 !important;
+    }
+
+    .feature-pulse.boot,
+    .feature-pulse .boot {
+      box-shadow:
+        0 0 0 5px #fff,
+        0 0 22px 9px rgba(255,255,255,.92);
     }
 
     .self {
       position: absolute;
       left: 50%;
-      top: 82%;
-      width: var(--me-size);
-      height: calc(var(--me-size) * 1.28);
+      top: 83%;
+      width: var(--self-size);
+      height: calc(var(--self-size) * 1.35);
       transform: translate(-50%, -50%);
       pointer-events: none;
       z-index: 3;
@@ -526,10 +587,14 @@
       background: #fff;
     }
 
+    .self .back-number {
+      font-size: calc(var(--self-size) * .31);
+    }
+
     .ball {
       position: absolute;
       left: 50%;
-      top: 91%;
+      top: 93%;
       width: clamp(30px, 4.3vw, 38px);
       aspect-ratio: 1;
       transform: translate(-50%, -50%);
@@ -671,29 +736,31 @@
     }
 
     .cue-number {
-      width: 68px;
-      aspect-ratio: 1;
-      border-radius: 50%;
+      min-width: 78px;
+      height: 78px;
+      border-radius: 20px;
       background: #fff;
       color: #101414;
       border: 5px solid #101414;
       display: grid;
       place-items: center;
-      font-size: 42px;
+      font-size: 49px;
       font-weight: 1000;
+      line-height: .9;
+      box-shadow: 0 0 0 4px rgba(0,0,0,.06);
     }
 
     .cue-head {
       position: relative;
-      width: 72px;
+      width: 76px;
       aspect-ratio: 1;
       border-radius: 50%;
       background: #bd8d6d;
       border: 5px solid #101414;
     }
 
-    .cue-head .eyes {
-      top: 55%;
+    .cue-head .neck {
+      display: none;
     }
 
     .cue-head .hair {
@@ -702,8 +769,8 @@
 
     .cue-shirt {
       position: relative;
-      width: 78px;
-      height: 70px;
+      width: 84px;
+      height: 74px;
       border-radius: 20px 20px 25px 25px;
       border: 5px solid #101414;
       background: #e8e3d6;
@@ -712,23 +779,22 @@
       place-items: center;
     }
 
-    .cue-shirt .num {
-      width: 42px;
+    .cue-shirt .back-number {
       font-size: 0;
     }
 
     .cue-band {
       position: relative;
-      width: 92px;
-      height: 70px;
+      width: 96px;
+      height: 72px;
       display: grid;
       place-items: center;
     }
 
     .cue-band::before {
       content: "";
-      width: 44px;
-      height: 62px;
+      width: 46px;
+      height: 64px;
       border-radius: 19px 19px 23px 23px;
       background: #e8e3d6;
       border: 5px solid #101414;
@@ -736,48 +802,75 @@
 
     .cue-band .band-mark {
       position: absolute;
-      top: 17px;
-      width: 22px;
-      height: 42px;
+      top: 16px;
+      width: 24px;
+      height: 44px;
       border-radius: 999px;
       background: #101414;
       border: 4px solid #fff;
       box-shadow: 0 0 0 3px #101414;
     }
 
-    .cue-band.left .band-mark { left: 14px; }
-    .cue-band.right .band-mark { right: 14px; }
+    .cue-band.left .band-mark { left: 12px; }
+    .cue-band.right .band-mark { right: 12px; }
 
     .cue-boots {
       position: relative;
-      width: 104px;
-      height: 58px;
+      width: 126px;
+      height: 70px;
     }
 
     .cue-boots .boot {
-      width: 54px;
-      height: 24px;
-      bottom: 15px;
-    }
-
-    .cue-boots .boot.b1 { left: 0; transform: rotate(-6deg); }
-    .cue-boots .boot.b2 { right: 0; transform: rotate(6deg); }
-
-    .sr {
       position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
+      width: 67px;
+      height: 31px;
+      bottom: 17px;
+      background: #fff;
+      border: 5px solid #101414;
+      border-radius: 999px;
       overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
     }
 
-    @keyframes clueGlow {
-      0%, 100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-      50% { filter: drop-shadow(0 0 14px rgba(255,255,255,.95)); }
+    .cue-boots .boot.b1 { left: 0; transform: rotate(-7deg); }
+    .cue-boots .boot.b2 { right: 0; transform: rotate(7deg); }
+
+    .cue-boots.boots-dots .boot::after,
+    .cue-boots.boots-stripes .boot::after,
+    .cue-boots.boots-half .boot::after,
+    .cue-boots.boots-cross .boot::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: inherit;
+    }
+
+    .cue-boots.boots-dots .boot::after {
+      background: radial-gradient(circle, #101414 0 3.5px, transparent 3.9px) 0 0/12px 12px;
+    }
+
+    .cue-boots.boots-stripes .boot::after {
+      background: repeating-linear-gradient(90deg, #101414 0 6px, transparent 6px 12px);
+    }
+
+    .cue-boots.boots-half .boot::after {
+      background: linear-gradient(90deg, #101414 0 50%, transparent 50% 100%);
+    }
+
+    .cue-boots.boots-cross .boot::after {
+      background:
+        linear-gradient(45deg, transparent 0 40%, #101414 40% 60%, transparent 60%),
+        linear-gradient(-45deg, transparent 0 40%, #101414 40% 60%, transparent 60%);
+    }
+
+    @keyframes hintSoftPulse {
+      0%, 100% {
+        opacity: .82;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.035);
+      }
     }
 
     @keyframes featurePulse {
@@ -786,8 +879,8 @@
         filter: drop-shadow(0 0 0 rgba(255,255,255,0));
       }
       50% {
-        transform: scale(1.12);
-        filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+        transform: scale(1.13);
+        filter: drop-shadow(0 0 12px rgba(255,255,255,1));
       }
     }
 
@@ -813,8 +906,8 @@
 
     @media (max-width: 640px) {
       :root {
-        --player-size: clamp(84px, 25vw, 108px);
-        --me-size: clamp(86px, 24vw, 108px);
+        --player-size: clamp(88px, 25vw, 112px);
+        --self-size: clamp(86px, 24vw, 108px);
       }
 
       body {
@@ -841,27 +934,33 @@
       }
 
       .cue-card {
-        width: min(94vw, 318px);
-        min-height: 84px;
-        grid-template-columns: 48px 1fr 48px;
+        width: min(96vw, 350px);
+        min-height: 92px;
+        grid-template-columns: 46px 1fr 56px;
         border-radius: 24px;
       }
 
-      .cue-type,
-      .hint-btn {
+      .cue-type {
         width: 40px;
         height: 40px;
         border-radius: 15px;
         font-size: 23px;
       }
 
+      .hint-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 18px;
+        font-size: 24px;
+      }
+
       .cue-main {
-        min-height: 66px;
+        min-height: 70px;
       }
 
       .pitch {
-        height: min(62svh, 530px);
-        min-height: 448px;
+        height: min(62svh, 540px);
+        min-height: 460px;
         border-radius: 24px;
       }
 
@@ -889,8 +988,8 @@
       .app {
         min-height: auto;
         grid-template-rows: auto 1fr auto;
-        grid-template-columns: 270px 1fr;
-        width: min(100%, 980px);
+        grid-template-columns: 300px 1fr;
+        width: min(100%, 990px);
         align-items: center;
       }
 
@@ -909,8 +1008,8 @@
       }
 
       .pitch {
-        height: min(76svh, 440px);
-        min-height: 385px;
+        height: min(76svh, 450px);
+        min-height: 395px;
       }
 
       .controls {
@@ -933,16 +1032,16 @@
 <body>
   <main class="app" aria-label="Cue Pass colour blind football decision game">
     <section class="top" aria-label="game header">
-      <div class="brand"><span>⚽</span><strong>CUE PASS</strong></div>
+      <div class="brand"><span class="brand-ball">⚽</span><strong>CUE PASS</strong></div>
       <div class="dots" id="dots" aria-label="round progress"></div>
-      <div class="top-icon" id="topIcon" aria-hidden="true">👀</div>
+      <div class="top-icon" aria-hidden="true">👀</div>
     </section>
 
     <section class="cue-zone" aria-label="current visual cue">
       <div class="cue-card">
         <div class="cue-type" id="cueIcon" aria-hidden="true">🔢</div>
         <div class="cue-main" id="cueMain"></div>
-        <button class="hint-btn glow" id="hintBtn" aria-label="show visual clue">👁️</button>
+        <button class="hint-btn" id="hintBtn" aria-label="optional visual clue">👁️</button>
       </div>
     </section>
 
@@ -1000,15 +1099,15 @@
       { number: 7, kit: "kit-light", pattern: "pattern-stripes", hair: "hair-spike", skin: "skin-light", boots: "boots-dots", band: "band-left" },
       { number: 5, kit: "kit-mid", pattern: "pattern-hoops", hair: "hair-mohawk", skin: "skin-deep", boots: "boots-stripes", band: "band-right" },
       { number: 9, kit: "kit-dark", pattern: "pattern-sash", hair: "hair-flat", skin: "", boots: "boots-half", band: "band-left" },
-      { number: 3, kit: "kit-light", pattern: "pattern-check", hair: "hair-band", skin: "skin-light", boots: "boots-stripes", band: "band-right" },
+      { number: 3, kit: "kit-light", pattern: "pattern-check", hair: "hair-band", skin: "skin-light", boots: "boots-cross", band: "band-right" },
       { number: 8, kit: "kit-mid", pattern: "pattern-stripes", hair: "hair-flat", skin: "skin-deep", boots: "boots-dots", band: "band-left" },
       { number: 4, kit: "kit-dark", pattern: "pattern-hoops", hair: "hair-spike", skin: "", boots: "boots-half", band: "band-right" }
     ];
 
     const positions = [
-      { x: 25, y: 34 },
-      { x: 75, y: 34 },
-      { x: 50, y: 57 }
+      { x: 24, y: 36 },
+      { x: 76, y: 36 },
+      { x: 50, y: 60 }
     ];
 
     let roundIndex = 0;
@@ -1042,17 +1141,53 @@
       return arr;
     }
 
+    function getFeatureValue(player, type) {
+      if (type === "number") return String(player.number);
+      if (type === "hair") return player.hair;
+      if (type === "boots") return player.boots;
+      if (type === "armband") return player.band;
+      if (type === "pattern") return player.pattern;
+      return "";
+    }
+
+    /* Accuracy upgrade:
+       For every round, the target cue is unique.
+       Example: on a boots round, only ONE player has the matching boots.
+       This prevents unclear / unfair matching. */
+    function choosePlayersForRound(type) {
+      const target = shuffle(playersPool)[0];
+      const usedValues = new Set([getFeatureValue(target, type)]);
+      const distractors = [];
+
+      for (const player of shuffle(playersPool)) {
+        if (player === target) continue;
+        const value = getFeatureValue(player, type);
+        if (usedValues.has(value)) continue;
+
+        distractors.push(player);
+        usedValues.add(value);
+
+        if (distractors.length === 2) break;
+      }
+
+      const chosen = shuffle([target, ...distractors]);
+      return {
+        players: chosen,
+        targetIndex: chosen.indexOf(target)
+      };
+    }
+
     function playerHTML(p) {
       return `
         <div class="player">
           <div class="shadow"></div>
           <div class="head ${p.skin}" data-feature="hair">
             <div class="hair ${p.hair}"></div>
-            <div class="eyes"></div>
+            <div class="neck"></div>
           </div>
           <div class="shirt ${p.kit} ${p.pattern}" data-feature="pattern">
             <div class="band ${p.band}" data-feature="armband"></div>
-            <div class="num" data-feature="number">${p.number}</div>
+            <div class="back-number" data-feature="number">${p.number}</div>
           </div>
           <div class="legs ${p.boots}" data-feature="boots">
             <div class="leg l"><div class="boot"></div></div>
@@ -1092,7 +1227,6 @@
         cueMain.innerHTML = `
           <div class="cue-head ${target.skin}">
             <div class="hair ${target.hair}"></div>
-            <div class="eyes"></div>
           </div>`;
         return;
       }
@@ -1118,68 +1252,47 @@
       if (round.type === "pattern") {
         cueMain.innerHTML = `
           <div class="cue-shirt ${target.kit} ${target.pattern}">
-            <div class="num"></div>
+            <div class="back-number"></div>
           </div>`;
       }
     }
 
     function resetBall() {
       ball.style.left = "50%";
-      ball.style.top = "91%";
+      ball.style.top = "93%";
       ball.style.transform = "translate(-50%, -50%) scale(1)";
     }
 
     function clearHints() {
       buttons.forEach(btn => {
-        btn.classList.remove("dim", "target-glow");
+        btn.classList.remove("target-glow");
         btn.querySelectorAll(".feature-pulse").forEach(el => el.classList.remove("feature-pulse"));
       });
-      hintBtn.classList.add("glow");
-    }
-
-    function newRound() {
-      locked = false;
-      clearHints();
-      resetBall();
-      renderDots();
-
-      if (roundIndex >= rounds.length) {
-        finishOverlay.classList.remove("hidden");
-        return;
-      }
-
-      const round = rounds[roundIndex];
-      currentPlayers = shuffle(playersPool).slice(0, 3);
-      targetIndex = Math.floor(Math.random() * 3);
-
-      renderPlayers();
-      renderCue(currentPlayers[targetIndex], round);
-
-      if (roundIndex === 0) {
-        setTimeout(showHint, 350);
-      }
     }
 
     function showHint() {
       if (locked || roundIndex >= rounds.length) return;
 
       clearHints();
-      hintBtn.classList.remove("glow");
 
       const feature = rounds[roundIndex].type;
+      const targetButton = buttons[targetIndex];
 
-      buttons.forEach(btn => {
-        const featureEls = btn.querySelectorAll(`[data-feature="${feature}"]`);
-        featureEls.forEach(el => el.classList.add("feature-pulse"));
-      });
+      targetButton.classList.add("target-glow");
 
-      buttons[targetIndex].classList.add("target-glow");
+      // Pulse the matching feature on the correct player.
+      targetButton
+        .querySelectorAll(`[data-feature="${feature}"]`)
+        .forEach(el => {
+          el.classList.add("feature-pulse");
 
-      setTimeout(() => {
-        buttons.forEach(btn => {
-          btn.querySelectorAll(".feature-pulse").forEach(el => el.classList.remove("feature-pulse"));
+          // For boots, pulse the actual boot shapes too.
+          if (feature === "boots") {
+            el.querySelectorAll(".boot").forEach(boot => boot.classList.add("feature-pulse"));
+          }
         });
-      }, 2300);
+
+      setTimeout(clearHints, 2600);
     }
 
     function showPop(symbol) {
@@ -1194,7 +1307,7 @@
       const playerRect = btn.getBoundingClientRect();
 
       const x = playerRect.left + playerRect.width / 2 - pitchRect.left;
-      const y = playerRect.top + playerRect.height * .66 - pitchRect.top;
+      const y = playerRect.top + playerRect.height * .68 - pitchRect.top;
 
       ball.style.left = `${x}px`;
       ball.style.top = `${y}px`;
@@ -1249,6 +1362,32 @@
       }
     }
 
+    function newRound() {
+      locked = false;
+      clearHints();
+      resetBall();
+      renderDots();
+
+      if (roundIndex >= rounds.length) {
+        finishOverlay.classList.remove("hidden");
+        return;
+      }
+
+      const round = rounds[roundIndex];
+      const selection = choosePlayersForRound(round.type);
+
+      currentPlayers = selection.players;
+      targetIndex = selection.targetIndex;
+
+      renderPlayers();
+      renderCue(currentPlayers[targetIndex], round);
+
+      // First level makes the clue button obvious immediately.
+      if (roundIndex === 0) {
+        setTimeout(showHint, 400);
+      }
+    }
+
     function startGame() {
       startOverlay.classList.add("hidden");
       finishOverlay.classList.add("hidden");
@@ -1284,6 +1423,8 @@
     });
 
     renderDots();
+
+    // Preview state before pressing play.
     currentPlayers = playersPool.slice(0, 3);
     targetIndex = 0;
     renderPlayers();
