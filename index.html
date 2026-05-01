@@ -3,177 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Cue Pass — First Day</title>
+  <meta name="theme-color" content="#07140d" />
+  <title>CUE PASS — Colour Blind Football Game</title>
   <style>
     :root {
-      --bg: #07120c;
-      --pitch: #12341f;
-      --pitch-2: #0f2a1a;
-      --line: rgba(255,255,255,.72);
-      --panel: rgba(255,255,255,.92);
-      --ink: #101314;
-      --muted: #4d565a;
-      --ring: #ffffff;
-      --shadow: rgba(0,0,0,.35);
-      --good: #ffffff;
-      --bad: #111111;
-      --accent: #f4f0dc;
-      --player-a: #d9d9d9;
-      --player-b: #f6f1de;
-      --player-c: #c9d7d8;
-      --opponent: #8f8f8f;
-      --ui-size: min(92vw, 560px);
+      --bg: #07140d;
+      --grass-1: #12351f;
+      --grass-2: #0e2a19;
+      --white: #f8f8f0;
+      --black: #101010;
+      --panel: rgba(248, 248, 240, 0.96);
+      --line: rgba(255,255,255,0.72);
+      --shadow: rgba(0,0,0,0.35);
+      --soft: rgba(255,255,255,0.18);
+      --kit-a: #d7d7d1;
+      --kit-b: #c6d0d1;
+      --kit-c: #e5decf;
+      --kit-d: #bfc3bd;
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
-      background: radial-gradient(circle at top, #163b25 0%, var(--bg) 60%);
+      background:
+        radial-gradient(circle at top, rgba(42, 96, 58, 0.9), transparent 42%),
+        var(--bg);
+      color: var(--white);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #fff;
       overflow-x: hidden;
     }
 
     body {
       display: grid;
       place-items: center;
-      padding: max(14px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+    }
+
+    button {
+      font: inherit;
     }
 
     .app {
-      width: min(100%, 920px);
-      min-height: min(860px, calc(100vh - 24px));
+      width: min(100%, 980px);
+      min-height: min(900px, calc(100svh - 20px));
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 12px;
+      gap: 10px;
     }
 
-    header {
+    .topbar {
+      min-height: 54px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      min-height: 54px;
+      gap: 10px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      font-size: clamp(.85rem, 3vw, 1rem);
-      text-transform: uppercase;
+      gap: 9px;
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+      font-size: clamp(0.85rem, 3vw, 1.05rem);
     }
 
     .brand-ball {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: #fff;
-      color: #111;
       display: grid;
       place-items: center;
-      box-shadow: 0 8px 18px var(--shadow);
-      font-size: 22px;
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 0 10px 22px var(--shadow);
     }
 
-    .progress {
+    .dots {
       display: flex;
-      gap: 6px;
       align-items: center;
       justify-content: flex-end;
+      gap: 6px;
       flex-wrap: wrap;
-      max-width: 46vw;
+      max-width: 48vw;
     }
 
     .dot {
-      width: 13px;
-      height: 13px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.28);
-      border: 2px solid rgba(255,255,255,.82);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.2);
     }
 
     .dot.done {
-      background: #fff;
-      position: relative;
+      background: var(--white);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
     }
 
-    .dot.done::after {
-      content: "";
-      position: absolute;
-      inset: 3px;
-      border-radius: 999px;
-      background: #111;
-    }
-
-    .game-shell {
+    .game {
       position: relative;
-      width: 100%;
-      min-height: 560px;
       display: grid;
       grid-template-rows: auto 1fr;
       gap: 10px;
+      min-height: 620px;
     }
 
-    .cue-row {
-      width: 100%;
+    .cue-wrap {
       display: grid;
       place-items: center;
-      position: relative;
-      z-index: 4;
+      z-index: 5;
     }
 
     .cue-card {
-      width: min(88vw, 300px);
-      min-height: 126px;
-      border-radius: 28px;
-      background: var(--panel);
-      color: var(--ink);
-      box-shadow: 0 16px 35px rgba(0,0,0,.28);
-      display: grid;
-      grid-template-columns: 54px 1fr 54px;
-      align-items: center;
+      width: min(92vw, 330px);
+      min-height: 122px;
       padding: 10px 12px;
-      border: 4px solid #fff;
+      border-radius: 30px;
+      border: 5px solid var(--white);
+      background: var(--panel);
+      color: var(--black);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.28);
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 4px;
     }
 
-    .cue-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 18px;
+    .cue-side {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: var(--black);
+      color: var(--white);
       display: grid;
       place-items: center;
-      background: #111;
-      color: #fff;
-      font-size: 26px;
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,.18);
+      font-size: 24px;
     }
 
     .cue-main {
+      min-height: 100px;
       display: grid;
       place-items: center;
-      min-height: 100px;
     }
 
-    .arrow {
-      font-size: 36px;
-      opacity: .8;
+    .cue-arrow {
+      font-size: 32px;
+      font-weight: 1000;
+      opacity: 0.78;
     }
 
     .pitch {
       position: relative;
-      min-height: 500px;
-      border-radius: 32px;
+      min-height: 520px;
       overflow: hidden;
+      border-radius: 34px;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow:
+        inset 0 0 0 5px rgba(255,255,255,0.72),
+        0 22px 52px rgba(0,0,0,0.36);
       background:
-        linear-gradient(90deg, transparent 0 48%, rgba(255,255,255,.35) 48% 52%, transparent 52% 100%),
-        repeating-linear-gradient(90deg, var(--pitch) 0 90px, var(--pitch-2) 90px 180px);
-      box-shadow: inset 0 0 0 4px rgba(255,255,255,.72), 0 20px 50px rgba(0,0,0,.34);
-      border: 2px solid rgba(255,255,255,.22);
+        linear-gradient(90deg, transparent 0 49.3%, rgba(255,255,255,0.5) 49.3% 50.7%, transparent 50.7% 100%),
+        repeating-linear-gradient(90deg, var(--grass-1) 0 88px, var(--grass-2) 88px 176px);
       touch-action: manipulation;
     }
 
@@ -182,268 +180,293 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(40vw, 230px);
-      height: min(40vw, 230px);
+      width: min(46vw, 250px);
+      height: min(46vw, 250px);
       transform: translate(-50%, -50%);
       border: 4px solid var(--line);
       border-radius: 50%;
-      opacity: .75;
+      opacity: 0.76;
     }
 
     .pitch::after {
       content: "";
       position: absolute;
       inset: 7% 6%;
-      border: 3px solid rgba(255,255,255,.45);
-      border-radius: 20px;
+      border: 3px solid rgba(255,255,255,0.44);
+      border-radius: 24px;
       pointer-events: none;
     }
 
-    .player-button {
+    .player-btn {
       appearance: none;
       border: 0;
       background: transparent;
       position: absolute;
-      width: clamp(90px, 19vw, 128px);
-      height: clamp(128px, 25vw, 172px);
+      width: clamp(94px, 19vw, 132px);
+      height: clamp(136px, 26vw, 178px);
       transform: translate(-50%, -50%);
-      cursor: pointer;
-      padding: 0;
-      display: grid;
-      place-items: end center;
-      filter: drop-shadow(0 16px 14px rgba(0,0,0,.36));
-    }
-
-    .player-button:focus-visible {
-      outline: 5px solid #fff;
-      outline-offset: 8px;
-      border-radius: 30px;
-    }
-
-    .player-button.correct-pulse .player-card {
-      animation: correctPulse .55s ease both;
-    }
-
-    .player-button.wrong-shake .player-card {
-      animation: wrongShake .38s ease both;
-    }
-
-    .player-button.hint .player-card {
-      animation: softHint 1.2s ease-in-out infinite;
-    }
-
-    .player-card {
-      width: 100%;
-      height: 100%;
-      position: relative;
       display: grid;
       place-items: center;
+      padding: 0;
+      cursor: pointer;
+      filter: drop-shadow(0 16px 16px rgba(0,0,0,0.35));
+      z-index: 3;
     }
 
-    .shadow-blob {
+    .player-btn:focus-visible,
+    .circle-btn:focus-visible {
+      outline: 5px solid var(--white);
+      outline-offset: 8px;
+      border-radius: 28px;
+    }
+
+    .player-btn.hint .player-card {
+      animation: hintGlow 1.05s ease-in-out infinite;
+    }
+
+    .player-btn.good .player-card {
+      animation: goodPop 0.55s ease both;
+    }
+
+    .player-btn.bad .player-card {
+      animation: badShake 0.36s ease both;
+    }
+
+    .player-card,
+    .mini-card,
+    .me-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .shadow {
       position: absolute;
-      bottom: 0;
+      bottom: 2px;
+      left: 50%;
       width: 74%;
-      height: 16px;
+      height: 17px;
+      transform: translateX(-50%);
       border-radius: 50%;
-      background: rgba(0,0,0,.32);
+      background: rgba(0,0,0,0.32);
       filter: blur(2px);
     }
 
     .legs {
       position: absolute;
-      bottom: 18px;
-      width: 54px;
-      height: 50px;
+      left: 50%;
+      bottom: 17px;
+      width: 58px;
+      height: 52px;
+      transform: translateX(-50%);
     }
 
     .leg {
       position: absolute;
       top: 0;
-      width: 18px;
+      width: 19px;
       height: 44px;
-      border-radius: 9px 9px 12px 12px;
-      background: #15191c;
-      border: 2px solid rgba(255,255,255,.9);
+      border-radius: 10px 10px 12px 12px;
+      background: #141718;
+      border: 2px solid rgba(255,255,255,0.88);
     }
 
-    .leg.left { left: 7px; transform: rotate(7deg); }
-    .leg.right { right: 7px; transform: rotate(-7deg); }
+    .leg.left { left: 8px; transform: rotate(7deg); }
+    .leg.right { right: 8px; transform: rotate(-7deg); }
 
     .boot {
       position: absolute;
-      bottom: -5px;
-      width: 25px;
-      height: 12px;
-      background: #fff;
-      border: 3px solid #111;
-      border-radius: 12px 14px 8px 8px;
+      bottom: -6px;
+      width: 27px;
+      height: 13px;
+      border-radius: 14px 14px 8px 8px;
+      background: var(--white);
+      border: 3px solid var(--black);
+      overflow: hidden;
     }
 
-    .boot.left { left: 0; transform: rotate(-6deg); }
-    .boot.right { right: 0; transform: rotate(6deg); }
+    .boot.left { left: -3px; transform: rotate(-7deg); }
+    .boot.right { right: -3px; transform: rotate(7deg); }
 
     .boots-dots .boot::after,
-    .boots-stripes .boot::after,
-    .boots-block .boot::after {
+    .boots-bars .boot::after,
+    .boots-half .boot::after,
+    .boots-cross .boot::after {
       content: "";
       position: absolute;
-      inset: 2px;
+      inset: 1px;
       border-radius: inherit;
     }
 
     .boots-dots .boot::after {
-      background: radial-gradient(circle, #111 0 2px, transparent 2.4px) 0 0/8px 8px;
+      background: radial-gradient(circle, #111 0 2px, transparent 2.5px) 0 0 / 8px 8px;
     }
 
-    .boots-stripes .boot::after {
+    .boots-bars .boot::after {
       background: repeating-linear-gradient(90deg, #111 0 3px, transparent 3px 7px);
     }
 
-    .boots-block .boot::after {
-      background: linear-gradient(90deg, #111 0 48%, transparent 48% 100%);
+    .boots-half .boot::after {
+      background: linear-gradient(90deg, #111 0 50%, transparent 50% 100%);
+    }
+
+    .boots-cross .boot::after {
+      background:
+        linear-gradient(45deg, transparent 0 42%, #111 42% 58%, transparent 58% 100%),
+        linear-gradient(-45deg, transparent 0 42%, #111 42% 58%, transparent 58% 100%);
     }
 
     .body {
       position: absolute;
+      left: 50%;
       bottom: 58px;
-      width: 74px;
-      height: 78px;
-      border-radius: 22px 22px 30px 30px;
-      background: var(--player-a);
-      border: 4px solid #111;
-      box-shadow: inset 0 0 0 4px rgba(255,255,255,.32);
+      width: 76px;
+      height: 80px;
+      transform: translateX(-50%);
+      border-radius: 24px 24px 30px 30px;
+      border: 4px solid var(--black);
       display: grid;
       place-items: center;
       overflow: hidden;
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.28);
+      background: var(--kit-a);
     }
 
-    .kit-a { background: var(--player-a); }
-    .kit-b { background: var(--player-b); }
-    .kit-c { background: var(--player-c); }
+    .kit-a { background: var(--kit-a); }
+    .kit-b { background: var(--kit-b); }
+    .kit-c { background: var(--kit-c); }
+    .kit-d { background: var(--kit-d); }
 
     .pattern-stripes::before,
-    .pattern-hoop::before,
+    .pattern-hoops::before,
     .pattern-sash::before,
-    .pattern-check::before {
+    .pattern-check::before,
+    .pattern-dot::before {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: .95;
+      opacity: 0.96;
     }
 
     .pattern-stripes::before {
-      background: repeating-linear-gradient(90deg, transparent 0 11px, rgba(0,0,0,.42) 11px 19px);
+      background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(0,0,0,0.43) 12px 20px);
     }
 
-    .pattern-hoop::before {
-      background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(0,0,0,.44) 13px 21px);
+    .pattern-hoops::before {
+      background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(0,0,0,0.45) 13px 21px);
     }
 
     .pattern-sash::before {
-      background: linear-gradient(135deg, transparent 0 38%, rgba(0,0,0,.48) 38% 58%, transparent 58% 100%);
+      background: linear-gradient(135deg, transparent 0 36%, rgba(0,0,0,0.48) 36% 58%, transparent 58% 100%);
     }
 
     .pattern-check::before {
       background:
-        linear-gradient(45deg, rgba(0,0,0,.44) 25%, transparent 25% 75%, rgba(0,0,0,.44) 75%),
-        linear-gradient(45deg, rgba(0,0,0,.44) 25%, transparent 25% 75%, rgba(0,0,0,.44) 75%);
+        linear-gradient(45deg, rgba(0,0,0,0.43) 25%, transparent 25% 75%, rgba(0,0,0,0.43) 75%),
+        linear-gradient(45deg, rgba(0,0,0,0.43) 25%, transparent 25% 75%, rgba(0,0,0,0.43) 75%);
       background-size: 18px 18px;
       background-position: 0 0, 9px 9px;
+    }
+
+    .pattern-dot::before {
+      background: radial-gradient(circle, rgba(0,0,0,0.48) 0 4px, transparent 4.6px) 0 0 / 18px 18px;
     }
 
     .number {
       position: relative;
       z-index: 2;
-      width: 46px;
-      height: 46px;
+      width: 47px;
+      height: 47px;
       border-radius: 50%;
-      background: #fff;
-      color: #111;
       display: grid;
       place-items: center;
+      background: var(--white);
+      border: 4px solid var(--black);
+      color: var(--black);
+      font-size: 25px;
       font-weight: 1000;
-      font-size: 26px;
-      border: 3px solid #111;
       line-height: 1;
     }
 
     .armband {
       position: absolute;
-      top: 29px;
-      width: 16px;
-      height: 32px;
+      top: 28px;
+      width: 17px;
+      height: 34px;
+      border-radius: 14px;
       background: #111;
-      border: 3px solid #fff;
-      border-radius: 12px;
+      border: 3px solid var(--white);
       z-index: 3;
+      box-shadow: 0 0 0 2px #111;
     }
 
-    .armband.left { left: -8px; }
-    .armband.right { right: -8px; }
+    .arm-left .armband { left: -8px; }
+    .arm-right .armband { right: -8px; }
 
     .head {
       position: absolute;
-      bottom: 130px;
-      width: 48px;
-      height: 48px;
+      left: 50%;
+      bottom: 132px;
+      width: 50px;
+      height: 50px;
+      transform: translateX(-50%);
       border-radius: 50%;
-      background: #c69b7c;
-      border: 4px solid #111;
-      z-index: 5;
-      overflow: visible;
+      background: #c79d7c;
+      border: 4px solid var(--black);
+      z-index: 4;
     }
 
-    .head.deep { background: #7f503a; }
-    .head.light { background: #d4aa86; }
+    .skin-dark .head { background: #805238; }
+    .skin-light .head { background: #d8ae8a; }
 
     .hair {
       position: absolute;
       left: 50%;
-      top: -9px;
       transform: translateX(-50%);
-      background: #111;
-      z-index: 6;
+      background: var(--black);
+      z-index: 2;
     }
 
     .hair-flat {
-      width: 44px;
+      top: -8px;
+      width: 43px;
       height: 17px;
-      border-radius: 24px 24px 8px 8px;
+      border-radius: 22px 22px 7px 7px;
     }
 
-    .hair-spike {
-      width: 40px;
-      height: 22px;
+    .hair-spikes {
+      top: -15px;
+      width: 44px;
+      height: 28px;
       background: transparent;
     }
 
-    .hair-spike::before {
+    .hair-spikes::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: #111;
-      clip-path: polygon(0% 100%, 11% 30%, 24% 100%, 39% 18%, 54% 100%, 69% 28%, 84% 100%, 100% 34%, 100% 100%);
+      background: var(--black);
+      clip-path: polygon(0 100%, 10% 28%, 22% 100%, 37% 8%, 52% 100%, 67% 20%, 82% 100%, 100% 28%, 100% 100%);
     }
 
     .hair-band {
-      width: 46px;
-      height: 11px;
-      border-radius: 10px;
       top: 5px;
+      width: 48px;
+      height: 11px;
+      border-radius: 999px;
     }
 
     .hair-mohawk {
+      top: -19px;
       width: 18px;
-      height: 30px;
+      height: 32px;
       border-radius: 18px 18px 4px 4px;
-      top: -18px;
     }
 
     .eyes {
       position: absolute;
+      top: 23px;
       left: 50%;
-      top: 22px;
       width: 25px;
       height: 6px;
       transform: translateX(-50%);
@@ -456,507 +479,539 @@
       content: "";
       width: 6px;
       height: 6px;
-      background: #111;
       border-radius: 50%;
+      background: var(--black);
     }
 
     .me {
       position: absolute;
       left: 50%;
       bottom: 32px;
+      width: clamp(94px, 18vw, 126px);
+      height: clamp(132px, 24vw, 170px);
       transform: translateX(-50%);
-      width: clamp(90px, 18vw, 122px);
-      height: clamp(122px, 23vw, 160px);
-      pointer-events: none;
-      filter: drop-shadow(0 14px 10px rgba(0,0,0,.28));
       z-index: 2;
+      pointer-events: none;
+      filter: drop-shadow(0 16px 14px rgba(0,0,0,0.28));
     }
 
     .me .body {
-      background: #fff;
-    }
-
-    .me .number {
-      font-size: 24px;
+      background: var(--white);
     }
 
     .ball {
       position: absolute;
       left: 50%;
       bottom: 36px;
-      width: 34px;
-      height: 34px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
+      background: var(--white);
+      border: 4px solid var(--black);
       transform: translateX(-50%);
-      background: #fff;
-      border: 4px solid #111;
       z-index: 9;
       display: grid;
       place-items: center;
-      box-shadow: 0 8px 12px rgba(0,0,0,.28);
-      transition: left .45s cubic-bezier(.2,.8,.2,1), bottom .45s cubic-bezier(.2,.8,.2,1), transform .45s cubic-bezier(.2,.8,.2,1);
+      box-shadow: 0 8px 13px rgba(0,0,0,0.28);
+      transition:
+        left 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+        bottom 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .ball::after {
       content: "";
       width: 14px;
       height: 14px;
-      background: #111;
+      background: var(--black);
       clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
     }
 
-    .feedback {
+    .flash {
       position: absolute;
       left: 50%;
-      top: 48%;
-      transform: translate(-50%, -50%) scale(.85);
-      width: 86px;
-      height: 86px;
+      top: 47%;
+      width: 88px;
+      height: 88px;
+      transform: translate(-50%, -50%) scale(0.8);
       border-radius: 50%;
-      background: rgba(255,255,255,.96);
-      color: #111;
       display: grid;
       place-items: center;
-      font-weight: 1000;
+      background: rgba(248,248,240,0.98);
+      color: var(--black);
+      border: 5px solid var(--black);
       font-size: 52px;
-      z-index: 20;
+      font-weight: 1000;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.34);
       opacity: 0;
       pointer-events: none;
-      box-shadow: 0 16px 35px rgba(0,0,0,.36);
-      border: 5px solid #111;
+      z-index: 30;
     }
 
-    .feedback.show {
-      animation: pop .7s ease both;
+    .flash.show {
+      animation: flashPop 0.72s ease both;
     }
 
-    .start-layer, .finish-layer {
+    .overlay {
       position: absolute;
       inset: 0;
-      z-index: 40;
+      z-index: 50;
       display: grid;
       place-items: center;
-      padding: 20px;
-      background: rgba(7,18,12,.82);
-      backdrop-filter: blur(6px);
+      padding: 18px;
+      background: rgba(7, 20, 13, 0.84);
+      backdrop-filter: blur(7px);
     }
 
-    .finish-layer { display: none; }
+    .overlay.hidden {
+      display: none;
+    }
 
-    .start-card, .finish-card {
-      width: min(92vw, 430px);
-      border-radius: 34px;
-      background: rgba(255,255,255,.96);
-      color: #111;
+    .panel {
+      width: min(92vw, 440px);
+      border-radius: 36px;
+      border: 5px solid var(--white);
+      background: var(--panel);
+      color: var(--black);
+      box-shadow: 0 26px 62px rgba(0,0,0,0.44);
       padding: 22px;
-      box-shadow: 0 24px 60px rgba(0,0,0,.42);
       display: grid;
-      gap: 18px;
       place-items: center;
+      gap: 18px;
       text-align: center;
-      border: 5px solid #fff;
     }
 
-    .start-title {
-      font-size: clamp(2.1rem, 9vw, 4rem);
+    .title {
+      font-size: clamp(2.45rem, 11vw, 4.9rem);
       font-weight: 1000;
-      letter-spacing: -.05em;
-      line-height: .86;
+      line-height: 0.84;
+      letter-spacing: -0.065em;
     }
 
-    .icon-flow {
+    .visual-rule {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      font-size: clamp(2rem, 9vw, 3.5rem);
       flex-wrap: wrap;
+      gap: 9px;
+      font-size: clamp(2rem, 10vw, 3.8rem);
+      line-height: 1;
     }
 
-    .tiny-line {
+    .tiny {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #111;
-      font-size: clamp(.8rem, 3vw, .95rem);
-      font-weight: 850;
-      letter-spacing: .04em;
-      text-transform: uppercase;
+      font-size: clamp(0.78rem, 3vw, 0.94rem);
+      font-weight: 1000;
+      letter-spacing: 0.05em;
     }
 
-    .play-btn, .reset-btn, .sound-btn {
+    .circle-btn {
+      appearance: none;
       border: 0;
-      border-radius: 999px;
-      background: #111;
-      color: #fff;
-      font-size: 34px;
-      font-weight: 1000;
-      min-width: 88px;
+      min-width: 82px;
       height: 72px;
-      padding: 0 28px;
+      padding: 0 26px;
+      border-radius: 999px;
+      background: var(--black);
+      color: var(--white);
       display: inline-grid;
       place-items: center;
+      font-size: 33px;
+      font-weight: 1000;
       cursor: pointer;
-      box-shadow: 0 12px 24px rgba(0,0,0,.26);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.28);
     }
 
-    .reset-btn, .sound-btn {
-      min-width: 56px;
-      height: 56px;
-      font-size: 25px;
-      padding: 0;
-      border: 2px solid rgba(255,255,255,.85);
-    }
-
-    footer {
+    .bottom-bar {
+      min-height: 58px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      min-height: 60px;
     }
 
-    .mini-player {
-      position: relative;
-      width: 88px;
-      height: 104px;
-      transform: scale(.92);
-    }
-
-    .mini-player .head {
-      bottom: 77px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 38px;
-      height: 38px;
-    }
-
-    .mini-player .body {
-      bottom: 23px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 62px;
-      height: 62px;
-      border-width: 4px;
-      border-radius: 18px 18px 24px 24px;
-    }
-
-    .mini-player .number {
-      width: 40px;
-      height: 40px;
+    .small-btn {
+      width: 58px;
+      min-width: 58px;
+      height: 58px;
+      padding: 0;
+      border: 2px solid rgba(255,255,255,0.75);
       font-size: 24px;
     }
 
-    .mini-player .legs { display: none; }
-    .mini-player .shadow-blob { display: none; }
-    .mini-player .armband { top: 22px; }
-
     .cue-number {
-      width: 86px;
-      height: 86px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      background: #fff;
-      color: #111;
-      border: 6px solid #111;
       display: grid;
       place-items: center;
+      background: var(--white);
+      color: var(--black);
+      border: 6px solid var(--black);
+      box-shadow: 0 0 0 5px rgba(0,0,0,0.08);
+      font-size: 56px;
       font-weight: 1000;
-      font-size: 54px;
-      box-shadow: 0 0 0 5px rgba(0,0,0,.08);
+      line-height: 1;
     }
 
     .cue-boots {
-      width: 118px;
-      height: 72px;
       position: relative;
+      width: 132px;
+      height: 78px;
     }
 
     .cue-boots .boot {
-      width: 58px;
-      height: 28px;
-      bottom: 18px;
+      width: 62px;
+      height: 30px;
+      bottom: 20px;
     }
 
-    .cue-boots .boot.left { left: 3px; }
-    .cue-boots .boot.right { right: 3px; }
+    .cue-boots .boot.left { left: 4px; }
+    .cue-boots .boot.right { right: 4px; }
 
-    .cue-hair {
+    .cue-head {
+      position: relative;
       width: 98px;
       height: 98px;
       border-radius: 50%;
-      background: #c69b7c;
-      border: 6px solid #111;
+      background: #c79d7c;
+      border: 6px solid var(--black);
+    }
+
+    .cue-head.skin-dark { background: #805238; }
+    .cue-head.skin-light { background: #d8ae8a; }
+    .cue-head .hair { transform: translateX(-50%) scale(1.55); }
+    .cue-head .eyes { top: 47px; transform: translateX(-50%) scale(1.25); }
+
+    .cue-shirt {
       position: relative;
+      width: 98px;
+      height: 104px;
+      border-radius: 25px 25px 32px 32px;
+      background: var(--kit-a);
+      border: 6px solid var(--black);
+      overflow: hidden;
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.25);
     }
 
-    .cue-hair .hair { transform: translateX(-50%) scale(1.55); }
-    .cue-hair.deep { background: #7f503a; }
-    .cue-hair.light { background: #d4aa86; }
-
-    .cue-armband {
-      width: 104px;
-      height: 86px;
-      position: relative;
-      display: grid;
-      place-items: center;
+    .cue-shirt .armband {
+      top: 31px;
+      width: 18px;
+      height: 38px;
     }
 
-    .cue-armband::before {
-      content: "";
-      width: 46px;
-      height: 74px;
-      border-radius: 20px;
-      background: #e8e8e8;
-      border: 5px solid #111;
+    .cue-shirt.arm-left .armband { left: -1px; }
+    .cue-shirt.arm-right .armband { right: -1px; }
+
+    .mini-card {
+      width: 102px;
+      height: 114px;
+      transform: scale(0.98);
     }
 
-    .cue-armband .band {
-      position: absolute;
-      top: 22px;
-      width: 24px;
-      height: 48px;
-      background: #111;
-      border: 4px solid #fff;
-      border-radius: 14px;
-      box-shadow: 0 0 0 3px #111;
+    .mini-card .shadow,
+    .mini-card .legs {
+      display: none;
     }
 
-    .cue-armband.left .band { left: 15px; }
-    .cue-armband.right .band { right: 15px; }
+    .mini-card .head {
+      bottom: 74px;
+      width: 41px;
+      height: 41px;
+    }
 
-    .hidden { display: none !important; }
+    .mini-card .body {
+      bottom: 18px;
+      width: 70px;
+      height: 70px;
+    }
 
-    @keyframes correctPulse {
+    .mini-card .number {
+      width: 0;
+      height: 0;
+      border: 0;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    @keyframes hintGlow {
+      0%, 100% { filter: drop-shadow(0 16px 16px rgba(0,0,0,0.35)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 24px rgba(255,255,255,0.98)); transform: scale(1.04); }
+    }
+
+    @keyframes goodPop {
       0% { transform: scale(1); }
-      40% { transform: scale(1.12); filter: drop-shadow(0 0 18px rgba(255,255,255,.95)); }
+      45% { transform: scale(1.13); filter: drop-shadow(0 0 22px rgba(255,255,255,0.95)); }
       100% { transform: scale(1); }
     }
 
-    @keyframes wrongShake {
-      0%,100% { transform: translateX(0); }
-      22% { transform: translateX(-10px); }
-      44% { transform: translateX(10px); }
-      66% { transform: translateX(-7px); }
-      88% { transform: translateX(7px); }
+    @keyframes badShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-6px); }
     }
 
-    @keyframes softHint {
-      0%,100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-      50% { filter: drop-shadow(0 0 18px rgba(255,255,255,.95)); }
+    @keyframes flashPop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.55); }
+      18% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+      78% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
     }
 
-    @keyframes pop {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(.5); }
-      18% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-      82% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
+    @media (max-width: 680px) {
+      body { padding: 8px; }
+      .app { min-height: calc(100svh - 16px); gap: 8px; }
+      .topbar { min-height: 48px; }
+      .brand-ball { width: 36px; height: 36px; }
+      .dots { gap: 5px; }
+      .dot { width: 12px; height: 12px; }
+      .game { min-height: 560px; gap: 8px; }
+      .cue-card {
+        width: min(94vw, 306px);
+        min-height: 108px;
+        border-radius: 25px;
+        grid-template-columns: 37px 1fr 37px;
+      }
+      .cue-side { width: 37px; height: 37px; border-radius: 14px; font-size: 22px; }
+      .cue-main { min-height: 88px; }
+      .cue-arrow { font-size: 27px; }
+      .pitch { min-height: 500px; border-radius: 28px; }
+      .player-btn { width: 88px; height: 132px; }
+      .body { width: 64px; height: 68px; bottom: 47px; border-width: 4px; }
+      .head { width: 42px; height: 42px; bottom: 109px; }
+      .legs { bottom: 12px; transform: translateX(-50%) scale(0.9); }
+      .number { width: 40px; height: 40px; font-size: 22px; border-width: 3px; }
+      .armband { top: 23px; height: 29px; width: 15px; }
+      .me { width: 88px; height: 124px; bottom: 26px; }
+      .me .body { bottom: 46px; }
+      .me .head { bottom: 108px; }
+      .ball { bottom: 31px; width: 31px; height: 31px; }
+      .cue-number { width: 78px; height: 78px; font-size: 48px; }
+      .cue-boots { transform: scale(0.9); }
+      .cue-head { transform: scale(0.88); }
+      .cue-shirt { transform: scale(0.86); }
+      .panel { border-radius: 30px; padding: 20px; }
     }
 
-    @media (max-width: 640px) {
-      body { padding: 10px; }
-      .app { min-height: calc(100vh - 20px); gap: 8px; }
-      .game-shell { min-height: 520px; gap: 8px; }
-      .pitch { min-height: 488px; border-radius: 26px; }
-      .cue-card { width: min(93vw, 292px); min-height: 112px; border-radius: 24px; grid-template-columns: 42px 1fr 42px; }
-      .cue-icon { width: 36px; height: 36px; font-size: 22px; border-radius: 14px; }
-      .arrow { font-size: 28px; }
-      .player-button { width: 86px; height: 126px; }
-      .body { width: 62px; height: 68px; bottom: 48px; }
-      .head { width: 42px; height: 42px; bottom: 108px; }
-      .legs { bottom: 13px; transform: scale(.9); }
-      .number { width: 39px; height: 39px; font-size: 22px; }
-      .me { width: 88px; height: 122px; bottom: 24px; }
-      .me .head { bottom: 106px; }
-      .me .body { bottom: 48px; }
-      .ball { bottom: 30px; width: 31px; height: 31px; }
-    }
-
-    @media (max-height: 700px) and (orientation: landscape) {
+    @media (max-height: 720px) and (orientation: landscape) {
+      body { place-items: start center; }
       .app { min-height: auto; }
-      .game-shell { grid-template-columns: minmax(190px, 280px) 1fr; grid-template-rows: 1fr; min-height: 420px; }
-      .cue-row { align-self: center; }
+      .game {
+        grid-template-columns: minmax(190px, 300px) 1fr;
+        grid-template-rows: 1fr;
+        min-height: 420px;
+      }
+      .cue-wrap { align-self: center; }
       .pitch { min-height: 420px; }
-      header, footer { min-height: 44px; }
+      .topbar,
+      .bottom-bar { min-height: 42px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="app" aria-label="Cue Pass colour blind football decision game">
-    <header>
+  <main class="app" aria-label="CUE PASS colour blind football decision game">
+    <header class="topbar">
       <div class="brand" aria-label="Cue Pass">
-        <div class="brand-ball">⚽</div>
+        <div class="brand-ball" aria-hidden="true">⚽</div>
         <span>CUE PASS</span>
       </div>
-      <div class="progress" id="progress" aria-label="progress"></div>
+      <div class="dots" id="dots" aria-label="round progress"></div>
     </header>
 
-    <section class="game-shell">
-      <div class="cue-row">
-        <div class="cue-card" aria-label="Look at the cue, then pass to the matching player">
-          <div class="cue-icon" aria-hidden="true">👀</div>
+    <section class="game">
+      <div class="cue-wrap">
+        <div class="cue-card" aria-label="look at the visual cue then pass to the matching player">
+          <div class="cue-side" aria-hidden="true">👀</div>
           <div class="cue-main" id="cueMain"></div>
-          <div class="arrow" aria-hidden="true">➡</div>
+          <div class="cue-arrow" aria-hidden="true">➜</div>
         </div>
       </div>
 
       <div class="pitch" id="pitch" aria-label="football pitch">
-        <button class="player-button" id="p0" aria-label="player option 1"></button>
-        <button class="player-button" id="p1" aria-label="player option 2"></button>
-        <button class="player-button" id="p2" aria-label="player option 3"></button>
+        <button class="player-btn" id="p0" aria-label="pass option one"></button>
+        <button class="player-btn" id="p1" aria-label="pass option two"></button>
+        <button class="player-btn" id="p2" aria-label="pass option three"></button>
 
         <div class="me" id="me" aria-hidden="true"></div>
         <div class="ball" id="ball" aria-hidden="true"></div>
-        <div class="feedback" id="feedback" aria-hidden="true">✓</div>
+        <div class="flash" id="flash" aria-hidden="true">✓</div>
 
-        <div class="start-layer" id="startLayer">
-          <div class="start-card">
-            <div class="start-title">CUE<br>PASS</div>
-            <div class="icon-flow" aria-hidden="true">👀 ➜ 🎯 ➜ ⚽</div>
-            <div class="tiny-line">LESS COLOUR · MORE CUES</div>
-            <button class="play-btn" id="playBtn" aria-label="start game">▶</button>
+        <div class="overlay" id="startOverlay">
+          <div class="panel">
+            <div class="title">CUE<br>PASS</div>
+            <div class="visual-rule" aria-hidden="true">👀 ➜ 🎯 ➜ ⚽</div>
+            <div class="tiny">LESS COLOUR · MORE CUES</div>
+            <button class="circle-btn" id="startBtn" aria-label="start game">▶</button>
           </div>
         </div>
 
-        <div class="finish-layer" id="finishLayer">
-          <div class="finish-card">
-            <div class="start-title">✓ ✓ ✓</div>
-            <div class="icon-flow" aria-hidden="true">👀 ⚽ 🧠</div>
-            <button class="play-btn" id="againBtn" aria-label="play again">↻</button>
+        <div class="overlay hidden" id="endOverlay">
+          <div class="panel">
+            <div class="title">✓ ✓ ✓</div>
+            <div class="visual-rule" aria-hidden="true">👀 ⚽ 🧠</div>
+            <div class="tiny">CUES FIRST</div>
+            <button class="circle-btn" id="againBtn" aria-label="play again">↻</button>
           </div>
         </div>
       </div>
     </section>
 
-    <footer>
-      <button class="reset-btn" id="resetBtn" aria-label="reset game">↻</button>
-      <button class="sound-btn" id="soundBtn" aria-label="sound on or off">🔈</button>
+    <footer class="bottom-bar">
+      <button class="circle-btn small-btn" id="resetBtn" aria-label="reset game">↻</button>
+      <button class="circle-btn small-btn" id="soundBtn" aria-label="sound on">🔈</button>
     </footer>
   </main>
 
   <script>
-    const totalRounds = 10;
-    let round = 0;
-    let targetIndex = 0;
-    let cueType = "number";
-    let soundOn = true;
-    let locked = false;
-    let firstHint = true;
-
+    const TOTAL_ROUNDS = 8;
     const positions = [
-      { left: 26, bottom: 53 },
-      { left: 74, bottom: 53 },
-      { left: 50, bottom: 72 }
+      { left: 25, bottom: 54 },
+      { left: 75, bottom: 54 },
+      { left: 50, bottom: 74 }
     ];
 
-    const playersPool = [
-      { number: 7, kit: "kit-a", pattern: "pattern-stripes", hair: "hair-spike", skin: "light", boots: "boots-dots", band: "left" },
-      { number: 9, kit: "kit-b", pattern: "pattern-hoop", hair: "hair-flat", skin: "deep", boots: "boots-stripes", band: "right" },
-      { number: 4, kit: "kit-c", pattern: "pattern-sash", hair: "hair-mohawk", skin: "", boots: "boots-block", band: "left" },
-      { number: 3, kit: "kit-a", pattern: "pattern-check", hair: "hair-band", skin: "light", boots: "boots-stripes", band: "right" },
-      { number: 8, kit: "kit-b", pattern: "pattern-stripes", hair: "hair-flat", skin: "", boots: "boots-dots", band: "left" },
-      { number: 5, kit: "kit-c", pattern: "pattern-hoop", hair: "hair-spike", skin: "deep", boots: "boots-block", band: "right" }
+    const players = [
+      { number: 7, kit: "kit-a", pattern: "pattern-stripes", hair: "hair-spikes", skin: "skin-light", boots: "boots-dots", arm: "arm-left" },
+      { number: 9, kit: "kit-b", pattern: "pattern-hoops", hair: "hair-flat", skin: "skin-dark", boots: "boots-bars", arm: "arm-right" },
+      { number: 4, kit: "kit-c", pattern: "pattern-sash", hair: "hair-mohawk", skin: "", boots: "boots-half", arm: "arm-left" },
+      { number: 3, kit: "kit-d", pattern: "pattern-check", hair: "hair-band", skin: "skin-light", boots: "boots-cross", arm: "arm-right" },
+      { number: 8, kit: "kit-a", pattern: "pattern-dot", hair: "hair-flat", skin: "", boots: "boots-dots", arm: "arm-left" },
+      { number: 5, kit: "kit-b", pattern: "pattern-stripes", hair: "hair-spikes", skin: "skin-dark", boots: "boots-half", arm: "arm-right" }
     ];
 
-    const cueOrder = ["number", "pattern", "boots", "hair", "armband", "number", "pattern", "boots", "hair", "armband"];
-    let currentPlayers = [];
+    const roundPlan = [
+      "number",
+      "number",
+      "hair",
+      "boots",
+      "armband",
+      "pattern",
+      "number",
+      "mixed"
+    ];
 
+    let round = 0;
+    let target = 0;
+    let cue = "number";
+    let current = [];
+    let locked = false;
+    let soundOn = true;
+    let mistakeCount = 0;
+
+    const dots = document.getElementById("dots");
     const cueMain = document.getElementById("cueMain");
-    const progress = document.getElementById("progress");
-    const ball = document.getElementById("ball");
     const pitch = document.getElementById("pitch");
-    const feedback = document.getElementById("feedback");
-    const startLayer = document.getElementById("startLayer");
-    const finishLayer = document.getElementById("finishLayer");
-    const playBtn = document.getElementById("playBtn");
+    const ball = document.getElementById("ball");
+    const flash = document.getElementById("flash");
+    const startOverlay = document.getElementById("startOverlay");
+    const endOverlay = document.getElementById("endOverlay");
+    const startBtn = document.getElementById("startBtn");
     const againBtn = document.getElementById("againBtn");
     const resetBtn = document.getElementById("resetBtn");
     const soundBtn = document.getElementById("soundBtn");
-    const buttons = [0,1,2].map(i => document.getElementById(`p${i}`));
+    const buttons = [0, 1, 2].map(i => document.getElementById(`p${i}`));
     const me = document.getElementById("me");
 
-    function shuffle(items) {
-      const arr = [...items];
-      for (let i = arr.length - 1; i > 0; i--) {
+    function shuffle(list) {
+      const copy = [...list];
+      for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [copy[i], copy[j]] = [copy[j], copy[i]];
       }
-      return arr;
+      return copy;
     }
 
-    function renderProgress() {
-      progress.innerHTML = "";
-      for (let i = 0; i < totalRounds; i++) {
+    function renderDots() {
+      dots.innerHTML = "";
+      for (let i = 0; i < TOTAL_ROUNDS; i++) {
         const dot = document.createElement("div");
         dot.className = "dot" + (i < round ? " done" : "");
-        progress.appendChild(dot);
+        dots.appendChild(dot);
       }
     }
 
-    function playerHTML(player, mini = false) {
+    function playerMarkup(player, mode = "player-card") {
       return `
-        <div class="${mini ? "mini-player" : "player-card"}">
-          <div class="shadow-blob"></div>
-          <div class="head ${player.skin}">
+        <div class="${mode} ${player.skin}">
+          <div class="shadow"></div>
+          <div class="head">
             <div class="hair ${player.hair}"></div>
             <div class="eyes"></div>
           </div>
-          <div class="body ${player.kit} ${player.pattern}">
-            <div class="armband ${player.band}"></div>
+          <div class="body ${player.kit} ${player.pattern} ${player.arm}">
+            <div class="armband"></div>
             <div class="number">${player.number}</div>
           </div>
           <div class="legs ${player.boots}">
             <div class="leg left"><div class="boot left"></div></div>
             <div class="leg right"><div class="boot right"></div></div>
           </div>
-        </div>`;
-    }
-
-    function renderCue(player) {
-      if (cueType === "number") {
-        cueMain.innerHTML = `<div class="cue-number">${player.number}</div>`;
-        return;
-      }
-      if (cueType === "pattern") {
-        cueMain.innerHTML = playerHTML({ ...player, number: "" }, true);
-        cueMain.querySelector(".number").innerHTML = "";
-        return;
-      }
-      if (cueType === "boots") {
-        cueMain.innerHTML = `
-          <div class="cue-boots ${player.boots}">
-            <div class="boot left"></div>
-            <div class="boot right"></div>
-          </div>`;
-        return;
-      }
-      if (cueType === "hair") {
-        cueMain.innerHTML = `
-          <div class="cue-hair ${player.skin}">
-            <div class="hair ${player.hair}"></div>
-            <div class="eyes"></div>
-          </div>`;
-        return;
-      }
-      if (cueType === "armband") {
-        cueMain.innerHTML = `
-          <div class="cue-armband ${player.band}">
-            <div class="band"></div>
-          </div>`;
-      }
+        </div>
+      `;
     }
 
     function renderPlayers() {
       buttons.forEach((btn, i) => {
-        btn.className = "player-button";
+        btn.className = "player-btn";
         btn.style.left = `${positions[i].left}%`;
         btn.style.bottom = `${positions[i].bottom}%`;
-        btn.innerHTML = playerHTML(currentPlayers[i]);
-        btn.dataset.index = i;
+        btn.innerHTML = playerMarkup(current[i]);
       });
+    }
+
+    function renderCue(player) {
+      if (cue === "number") {
+        cueMain.innerHTML = `<div class="cue-number">${player.number}</div>`;
+        return;
+      }
+
+      if (cue === "hair") {
+        cueMain.innerHTML = `
+          <div class="cue-head ${player.skin}">
+            <div class="hair ${player.hair}"></div>
+            <div class="eyes"></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (cue === "boots") {
+        cueMain.innerHTML = `
+          <div class="cue-boots ${player.boots}">
+            <div class="boot left"></div>
+            <div class="boot right"></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (cue === "armband") {
+        cueMain.innerHTML = `
+          <div class="cue-shirt ${player.kit} ${player.arm}">
+            <div class="armband"></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (cue === "pattern") {
+        cueMain.innerHTML = `
+          <div class="cue-shirt ${player.kit} ${player.pattern}"></div>
+        `;
+        return;
+      }
+
+      cueMain.innerHTML = playerMarkup(player, "mini-card");
     }
 
     function resetBall() {
@@ -965,119 +1020,132 @@
       ball.style.transform = "translateX(-50%) scale(1)";
     }
 
-    function newRound() {
+    function startRound() {
       locked = false;
-      renderProgress();
+      mistakeCount = 0;
+      renderDots();
       resetBall();
-      buttons.forEach(btn => btn.classList.remove("hint", "correct-pulse", "wrong-shake"));
+      buttons.forEach(btn => btn.classList.remove("hint", "good", "bad"));
 
-      if (round >= totalRounds) {
-        finishLayer.style.display = "grid";
+      if (round >= TOTAL_ROUNDS) {
+        endOverlay.classList.remove("hidden");
         return;
       }
 
-      cueType = cueOrder[round];
-      currentPlayers = shuffle(playersPool).slice(0, 3);
-      targetIndex = Math.floor(Math.random() * 3);
-      renderCue(currentPlayers[targetIndex]);
+      cue = roundPlan[round];
+      current = shuffle(players).slice(0, 3);
+      target = Math.floor(Math.random() * 3);
+      renderCue(current[target]);
       renderPlayers();
 
-      if (firstHint) {
-        firstHint = false;
-        buttons[targetIndex].classList.add("hint");
-        setTimeout(() => buttons[targetIndex]?.classList.remove("hint"), 2200);
+      if (round < 2) {
+        buttons[target].classList.add("hint");
+        setTimeout(() => buttons[target]?.classList.remove("hint"), 1700);
       }
     }
 
-    function playTone(type) {
+    function showFlash(symbol) {
+      flash.textContent = symbol;
+      flash.classList.remove("show");
+      void flash.offsetWidth;
+      flash.classList.add("show");
+    }
+
+    function tone(type) {
       if (!soundOn) return;
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const audio = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
         osc.type = "sine";
-        osc.frequency.value = type === "good" ? 660 : 150;
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-        osc.connect(gain).connect(ctx.destination);
+        osc.frequency.value = type === "good" ? 680 : 145;
+        gain.gain.setValueAtTime(0.001, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, audio.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.18);
+        osc.connect(gain).connect(audio.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.2);
-      } catch (e) {}
+        osc.stop(audio.currentTime + 0.2);
+      } catch (error) {}
     }
 
-    function showFeedback(symbol) {
-      feedback.textContent = symbol;
-      feedback.classList.remove("show");
-      void feedback.offsetWidth;
-      feedback.classList.add("show");
-    }
-
-    function passBallTo(btn) {
+    function passBall(btn) {
       const pitchRect = pitch.getBoundingClientRect();
-      const rect = btn.getBoundingClientRect();
-      const x = rect.left + rect.width / 2 - pitchRect.left;
-      const yFromBottom = pitchRect.bottom - (rect.top + rect.height * 0.63);
+      const btnRect = btn.getBoundingClientRect();
+      const x = btnRect.left + btnRect.width / 2 - pitchRect.left;
+      const yFromBottom = pitchRect.bottom - (btnRect.top + btnRect.height * 0.62);
       ball.style.left = `${x}px`;
       ball.style.bottom = `${yFromBottom}px`;
-      ball.style.transform = "translateX(-50%) scale(.86)";
+      ball.style.transform = "translateX(-50%) scale(0.86)";
     }
 
     function choose(index) {
       if (locked) return;
-      const btn = buttons[index];
-      buttons.forEach(b => b.classList.remove("hint"));
+      buttons.forEach(btn => btn.classList.remove("hint"));
 
-      if (index === targetIndex) {
+      if (index === target) {
         locked = true;
-        btn.classList.add("correct-pulse");
-        passBallTo(btn);
-        showFeedback("✓");
-        playTone("good");
-        if (navigator.vibrate) navigator.vibrate(35);
+        buttons[index].classList.add("good");
+        passBall(buttons[index]);
+        showFlash("✓");
+        tone("good");
+        if (navigator.vibrate) navigator.vibrate(28);
         setTimeout(() => {
           round++;
-          newRound();
+          startRound();
         }, 760);
-      } else {
-        btn.classList.add("wrong-shake");
-        showFeedback("✕");
-        playTone("bad");
-        if (navigator.vibrate) navigator.vibrate([35, 35, 35]);
-        setTimeout(() => btn.classList.remove("wrong-shake"), 450);
+        return;
+      }
+
+      mistakeCount++;
+      buttons[index].classList.add("bad");
+      showFlash("✕");
+      tone("bad");
+      if (navigator.vibrate) navigator.vibrate([24, 24, 24]);
+      setTimeout(() => buttons[index].classList.remove("bad"), 420);
+
+      if (mistakeCount >= 1) {
+        setTimeout(() => {
+          if (!locked) buttons[target].classList.add("hint");
+        }, 380);
       }
     }
 
-    function startGame() {
-      startLayer.classList.add("hidden");
-      finishLayer.style.display = "none";
+    function newGame() {
       round = 0;
-      firstHint = true;
-      newRound();
+      endOverlay.classList.add("hidden");
+      startRound();
     }
 
-    function resetGame() {
-      round = 0;
-      firstHint = true;
-      finishLayer.style.display = "none";
-      newRound();
+    function begin() {
+      startOverlay.classList.add("hidden");
+      newGame();
     }
 
     buttons.forEach((btn, i) => btn.addEventListener("click", () => choose(i)));
-    playBtn.addEventListener("click", startGame);
-    againBtn.addEventListener("click", resetGame);
-    resetBtn.addEventListener("click", resetGame);
+    startBtn.addEventListener("click", begin);
+    againBtn.addEventListener("click", newGame);
+    resetBtn.addEventListener("click", newGame);
     soundBtn.addEventListener("click", () => {
       soundOn = !soundOn;
       soundBtn.textContent = soundOn ? "🔈" : "🔇";
+      soundBtn.setAttribute("aria-label", soundOn ? "sound on" : "sound off");
     });
 
-    me.innerHTML = playerHTML({ number: 12, kit: "kit-a", pattern: "pattern-hoop", hair: "hair-flat", skin: "", boots: "boots-dots", band: "left" });
-    renderProgress();
-    currentPlayers = shuffle(playersPool).slice(0, 3);
-    targetIndex = 0;
-    cueType = "number";
-    renderCue(currentPlayers[targetIndex]);
+    me.innerHTML = playerMarkup({
+      number: 12,
+      kit: "kit-a",
+      pattern: "pattern-hoops",
+      hair: "hair-flat",
+      skin: "",
+      boots: "boots-dots",
+      arm: "arm-left"
+    }, "me-card");
+
+    renderDots();
+    current = shuffle(players).slice(0, 3);
+    target = 0;
+    cue = "number";
+    renderCue(current[target]);
     renderPlayers();
   </script>
 </body>
