@@ -108,6 +108,21 @@
       box-shadow: inset 0 0 0 3px #101414;
     }
 
+    .score-pill {
+      min-width: 58px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,.58);
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 1000;
+      font-size: .95rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,.22);
+    }
+
     .top-icon {
       width: 34px;
       height: 34px;
@@ -519,11 +534,11 @@
 
     .boot {
       position: absolute;
-      bottom: -17%;
-      width: 178%;
-      height: 35%;
+      bottom: -24%;
+      width: 205%;
+      height: 43%;
       background: #fff;
-      border: 4px solid #101414;
+      border: 5px solid #101414;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -542,11 +557,11 @@
     }
 
     .boots-dots .boot::after {
-      background: radial-gradient(circle, #101414 0 3px, transparent 3.3px) 0 0/11px 11px;
+      background: radial-gradient(circle, #101414 0 4px, transparent 4.4px) 0 0/14px 14px;
     }
 
     .boots-stripes .boot::after {
-      background: repeating-linear-gradient(90deg, #101414 0 5px, transparent 5px 10px);
+      background: repeating-linear-gradient(90deg, #101414 0 8px, transparent 8px 15px);
     }
 
     .boots-half .boot::after {
@@ -555,13 +570,21 @@
 
     .boots-cross .boot::after {
       background:
-        linear-gradient(45deg, transparent 0 40%, #101414 40% 60%, transparent 60%),
-        linear-gradient(-45deg, transparent 0 40%, #101414 40% 60%, transparent 60%);
+        linear-gradient(45deg, transparent 0 36%, #101414 36% 64%, transparent 64%),
+        linear-gradient(-45deg, transparent 0 36%, #101414 36% 64%, transparent 64%);
     }
 
     .feature-pulse {
       animation: featurePulse 1.05s ease-in-out infinite;
       z-index: 20 !important;
+    }
+
+    .boot-round .back-number {
+      opacity: .38;
+    }
+
+    .boot-round .legs .boot {
+      box-shadow: 0 0 0 3px rgba(255,255,255,.78);
     }
 
     .feature-pulse.boot,
@@ -679,6 +702,66 @@
 
     .overlay.hidden {
       display: none;
+    }
+
+    .score-card {
+      width: min(92vw, 430px);
+      border-radius: 32px;
+      background: var(--card);
+      color: var(--ink);
+      border: 5px solid #fff;
+      box-shadow: 0 24px 70px rgba(0,0,0,.42);
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      text-align: center;
+    }
+
+    .final-score {
+      font-size: clamp(3rem, 15vw, 5.4rem);
+      line-height: .9;
+      font-weight: 1000;
+      letter-spacing: -.06em;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .feedback-box {
+      border: 3px solid #101414;
+      border-radius: 22px;
+      padding: 12px 8px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      min-height: 94px;
+    }
+
+    .feedback-icon {
+      font-size: 2rem;
+    }
+
+    .feedback-num {
+      font-size: 2rem;
+      font-weight: 1000;
+      line-height: 1;
+    }
+
+    .feedback-message {
+      font-size: 1rem;
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .feedback-small {
+      font-size: .82rem;
+      font-weight: 850;
+      opacity: .78;
+      line-height: 1.15;
     }
 
     .panel {
@@ -816,17 +899,17 @@
 
     .cue-boots {
       position: relative;
-      width: 126px;
-      height: 70px;
+      width: 150px;
+      height: 82px;
     }
 
     .cue-boots .boot {
       position: absolute;
-      width: 67px;
-      height: 31px;
-      bottom: 17px;
+      width: 82px;
+      height: 39px;
+      bottom: 18px;
       background: #fff;
-      border: 5px solid #101414;
+      border: 6px solid #101414;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -845,11 +928,11 @@
     }
 
     .cue-boots.boots-dots .boot::after {
-      background: radial-gradient(circle, #101414 0 3.5px, transparent 3.9px) 0 0/12px 12px;
+      background: radial-gradient(circle, #101414 0 5px, transparent 5.4px) 0 0/15px 15px;
     }
 
     .cue-boots.boots-stripes .boot::after {
-      background: repeating-linear-gradient(90deg, #101414 0 6px, transparent 6px 12px);
+      background: repeating-linear-gradient(90deg, #101414 0 9px, transparent 9px 17px);
     }
 
     .cue-boots.boots-half .boot::after {
@@ -858,8 +941,8 @@
 
     .cue-boots.boots-cross .boot::after {
       background:
-        linear-gradient(45deg, transparent 0 40%, #101414 40% 60%, transparent 60%),
-        linear-gradient(-45deg, transparent 0 40%, #101414 40% 60%, transparent 60%);
+        linear-gradient(45deg, transparent 0 36%, #101414 36% 64%, transparent 64%),
+        linear-gradient(-45deg, transparent 0 36%, #101414 36% 64%, transparent 64%);
     }
 
     @keyframes hintSoftPulse {
@@ -925,8 +1008,10 @@
         gap: 6px;
       }
 
-      .top-icon {
-        display: none;
+      .score-pill {
+        height: 32px;
+        min-width: 56px;
+        font-size: .9rem;
       }
 
       .brand {
@@ -1034,7 +1119,7 @@
     <section class="top" aria-label="game header">
       <div class="brand"><span class="brand-ball">⚽</span><strong>CUE PASS</strong></div>
       <div class="dots" id="dots" aria-label="round progress"></div>
-      <div class="top-icon" aria-hidden="true">👀</div>
+      <div class="score-pill" id="scorePill" aria-label="score">0/0</div>
     </section>
 
     <section class="cue-zone" aria-label="current visual cue">
@@ -1073,10 +1158,26 @@
   </section>
 
   <section class="overlay hidden" id="finishOverlay">
-    <div class="panel">
-      <div class="title">✓ ✓ ✓</div>
-      <div class="icon-flow" aria-hidden="true">👀 ⚽ 🧠</div>
-      <div class="micro">CUES TELL THE TRUTH</div>
+    <div class="score-card">
+      <div class="micro">CUE PASS SCORE</div>
+      <div class="final-score" id="finalScore">0/10</div>
+
+      <div class="feedback-grid">
+        <div class="feedback-box">
+          <div class="feedback-icon">✅</div>
+          <div class="feedback-num" id="goodCount">0</div>
+          <div class="feedback-small">good choices</div>
+        </div>
+        <div class="feedback-box">
+          <div class="feedback-icon">👁️</div>
+          <div class="feedback-num" id="clueCount">0</div>
+          <div class="feedback-small">clues used</div>
+        </div>
+      </div>
+
+      <div class="feedback-message" id="finalMessage">Look for cues, not just colours.</div>
+      <div class="feedback-small" id="finalTip">Numbers, boots, hair, armbands and patterns can help you decide faster.</div>
+
       <button class="play-btn" id="againBtn" aria-label="play again">↻</button>
     </div>
   </section>
@@ -1115,6 +1216,11 @@
     let targetIndex = 0;
     let locked = false;
     let soundOn = true;
+    let score = 0;
+    let mistakes = 0;
+    let cluesUsed = 0;
+    let clueUsedThisRound = false;
+    let wrongThisRound = false;
 
     const dots = document.getElementById("dots");
     const cueIcon = document.getElementById("cueIcon");
@@ -1131,6 +1237,12 @@
     const finishOverlay = document.getElementById("finishOverlay");
     const buttons = [0,1,2].map(i => document.getElementById(`p${i}`));
     const selfPlayer = document.getElementById("selfPlayer");
+    const scorePill = document.getElementById("scorePill");
+    const finalScore = document.getElementById("finalScore");
+    const goodCount = document.getElementById("goodCount");
+    const clueCount = document.getElementById("clueCount");
+    const finalMessage = document.getElementById("finalMessage");
+    const finalTip = document.getElementById("finalTip");
 
     function shuffle(items) {
       const arr = [...items];
@@ -1205,12 +1317,35 @@
       });
     }
 
+    function updateScore() {
+      scorePill.textContent = `${score}/${roundIndex}`;
+    }
+
+    function showEndCard() {
+      finalScore.textContent = `${score}/${rounds.length}`;
+      goodCount.textContent = score;
+      clueCount.textContent = cluesUsed;
+
+      if (score >= 9) {
+        finalMessage.textContent = "Excellent cue decisions.";
+        finalTip.textContent = "You used visual information quickly without depending only on colour.";
+      } else if (score >= 6) {
+        finalMessage.textContent = "Good progress.";
+        finalTip.textContent = "Keep scanning for numbers, boot patterns, hair, armbands and shirt patterns.";
+      } else {
+        finalMessage.textContent = "Keep practising.";
+        finalTip.textContent = "Do not guess colours. Slow down, press the clue, then match the strongest visual cue.";
+      }
+
+      finishOverlay.classList.remove("hidden");
+    }
+
     function renderPlayers() {
       buttons.forEach((btn, i) => {
         const pos = positions[i];
         btn.style.setProperty("--x", `${pos.x}%`);
         btn.style.setProperty("--y", `${pos.y}%`);
-        btn.className = "player-btn";
+        btn.className = "player-btn" + (rounds[roundIndex]?.type === "boots" ? " boot-round" : "");
         btn.innerHTML = playerHTML(currentPlayers[i]);
       });
     }
@@ -1270,8 +1405,13 @@
       });
     }
 
-    function showHint() {
+    function showHint(countClue = true) {
       if (locked || roundIndex >= rounds.length) return;
+
+      if (countClue && !clueUsedThisRound) {
+        cluesUsed++;
+        clueUsedThisRound = true;
+      }
 
       clearHints();
 
@@ -1338,6 +1478,9 @@
 
       if (index === targetIndex) {
         locked = true;
+        if (!clueUsedThisRound && !wrongThisRound) {
+          score++;
+        }
         clearHints();
         btn.classList.add("correct", "target-glow");
         passBallTo(btn);
@@ -1350,6 +1493,8 @@
           newRound();
         }, 760);
       } else {
+        wrongThisRound = true;
+        mistakes++;
         btn.classList.add("wrong");
         showPop("✕");
         playTone("bad");
@@ -1369,9 +1514,14 @@
       renderDots();
 
       if (roundIndex >= rounds.length) {
-        finishOverlay.classList.remove("hidden");
+        updateScore();
+        showEndCard();
         return;
       }
+
+      clueUsedThisRound = false;
+      wrongThisRound = false;
+      updateScore();
 
       const round = rounds[roundIndex];
       const selection = choosePlayersForRound(round.type);
@@ -1384,7 +1534,7 @@
 
       // First level makes the clue button obvious immediately.
       if (roundIndex === 0) {
-        setTimeout(showHint, 400);
+        setTimeout(() => showHint(false), 400);
       }
     }
 
@@ -1392,17 +1542,23 @@
       startOverlay.classList.add("hidden");
       finishOverlay.classList.add("hidden");
       roundIndex = 0;
+      score = 0;
+      mistakes = 0;
+      cluesUsed = 0;
       newRound();
     }
 
     function restartGame() {
       finishOverlay.classList.add("hidden");
       roundIndex = 0;
+      score = 0;
+      mistakes = 0;
+      cluesUsed = 0;
       newRound();
     }
 
     buttons.forEach((btn, i) => btn.addEventListener("click", () => choose(i)));
-    hintBtn.addEventListener("click", showHint);
+    hintBtn.addEventListener("click", () => showHint(true));
     resetBtn.addEventListener("click", restartGame);
     playBtn.addEventListener("click", startGame);
     againBtn.addEventListener("click", restartGame);
@@ -1423,6 +1579,7 @@
     });
 
     renderDots();
+    updateScore();
 
     // Preview state before pressing play.
     currentPlayers = playersPool.slice(0, 3);
