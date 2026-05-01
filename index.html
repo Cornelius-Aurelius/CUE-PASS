@@ -14,8 +14,8 @@
       --card: rgba(250,250,244,.97);
       --ink: #101414;
       --shadow: rgba(0,0,0,.36);
-      --player-size: clamp(100px, 12vw, 138px);
-      --self-size: clamp(98px, 11vw, 128px);
+      --player-size: clamp(92px, 11.2vw, 132px);
+      --self-size: clamp(88px, 10.5vw, 122px);
     }
 
     * {
@@ -246,8 +246,8 @@
     .pitch {
       position: relative;
       width: 100%;
-      height: min(58svh, 515px);
-      min-height: 448px;
+      height: clamp(390px, 56svh, 515px);
+      min-height: 390px;
       border-radius: 28px;
       overflow: hidden;
       background:
@@ -534,17 +534,17 @@
 
     .boot {
       position: absolute;
-      bottom: -24%;
-      width: 205%;
-      height: 43%;
+      bottom: -29%;
+      width: 230%;
+      height: 50%;
       background: #fff;
       border: 5px solid #101414;
       border-radius: 999px;
       overflow: hidden;
     }
 
-    .leg.l .boot { left: -62%; transform: rotate(-7deg); }
-    .leg.r .boot { right: -62%; transform: rotate(7deg); }
+    .leg.l .boot { left: -78%; transform: rotate(-7deg); }
+    .leg.r .boot { right: -78%; transform: rotate(7deg); }
 
     .boots-dots .boot::after,
     .boots-stripes .boot::after,
@@ -579,12 +579,80 @@
       z-index: 20 !important;
     }
 
+    .boot-badge {
+      position: absolute;
+      left: 50%;
+      bottom: -10%;
+      transform: translateX(-50%);
+      width: 94%;
+      height: 29%;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      border: 4px solid #101414;
+      display: none;
+      place-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      padding: 5px;
+      z-index: 25;
+      box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    }
+
+    .badge-boot {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: #fff;
+      border: 3px solid #101414;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-boot.one { transform: rotate(-6deg); }
+    .badge-boot.two { transform: rotate(6deg); }
+
+    .boots-dots .badge-boot::after,
+    .boots-stripes .badge-boot::after,
+    .boots-half .badge-boot::after,
+    .boots-cross .badge-boot::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: inherit;
+    }
+
+    .boots-dots .badge-boot::after {
+      background: radial-gradient(circle, #101414 0 4px, transparent 4.4px) 0 0/13px 13px;
+    }
+
+    .boots-stripes .badge-boot::after {
+      background: repeating-linear-gradient(90deg, #101414 0 8px, transparent 8px 15px);
+    }
+
+    .boots-half .badge-boot::after {
+      background: linear-gradient(90deg, #101414 0 50%, transparent 50% 100%);
+    }
+
+    .boots-cross .badge-boot::after {
+      background:
+        linear-gradient(45deg, transparent 0 35%, #101414 35% 65%, transparent 65%),
+        linear-gradient(-45deg, transparent 0 35%, #101414 35% 65%, transparent 65%);
+    }
+
+    .boot-round .boot-badge {
+      display: grid;
+    }
+
     .boot-round .back-number {
-      opacity: .38;
+      opacity: .22;
+    }
+
+    .boot-round .shirt {
+      opacity: .78;
     }
 
     .boot-round .legs .boot {
-      box-shadow: 0 0 0 3px rgba(255,255,255,.78);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.9), 0 0 18px rgba(255,255,255,.9);
     }
 
     .feature-pulse.boot,
@@ -597,7 +665,7 @@
     .self {
       position: absolute;
       left: 50%;
-      top: 83%;
+      top: 84%;
       width: var(--self-size);
       height: calc(var(--self-size) * 1.35);
       transform: translate(-50%, -50%);
@@ -899,15 +967,17 @@
 
     .cue-boots {
       position: relative;
-      width: 150px;
-      height: 82px;
+      width: min(43vw, 174px);
+      height: 88px;
+      display: grid;
+      place-items: center;
     }
 
     .cue-boots .boot {
       position: absolute;
-      width: 82px;
-      height: 39px;
-      bottom: 18px;
+      width: min(22vw, 94px);
+      height: 44px;
+      bottom: 19px;
       background: #fff;
       border: 6px solid #101414;
       border-radius: 999px;
@@ -989,8 +1059,8 @@
 
     @media (max-width: 640px) {
       :root {
-        --player-size: clamp(88px, 25vw, 112px);
-        --self-size: clamp(86px, 24vw, 108px);
+        --player-size: clamp(82px, 23vw, 104px);
+        --self-size: clamp(80px, 22vw, 102px);
       }
 
       body {
@@ -1044,9 +1114,15 @@
       }
 
       .pitch {
-        height: min(62svh, 540px);
-        min-height: 460px;
+        height: clamp(410px, 58svh, 540px);
+        min-height: 410px;
         border-radius: 24px;
+      }
+
+      .boot-badge {
+        bottom: -13%;
+        height: 31%;
+        border-width: 3px;
       }
 
       .pitch::before {
@@ -1066,6 +1142,47 @@
       .small-btn {
         width: 40px;
         height: 40px;
+      }
+    }
+
+
+    @media (max-width: 380px) {
+      :root {
+        --player-size: 78px;
+        --self-size: 78px;
+      }
+
+      .cue-card {
+        width: 96vw;
+        min-height: 84px;
+        grid-template-columns: 42px 1fr 50px;
+        padding: 7px;
+      }
+
+      .hint-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+      }
+
+      .cue-type {
+        width: 38px;
+        height: 38px;
+        font-size: 21px;
+      }
+
+      .pitch {
+        height: 404px;
+        min-height: 404px;
+      }
+
+      .brand {
+        font-size: .78rem;
+      }
+
+      .score-pill {
+        height: 29px;
+        min-width: 52px;
       }
     }
 
@@ -1206,9 +1323,9 @@
     ];
 
     const positions = [
-      { x: 24, y: 36 },
-      { x: 76, y: 36 },
-      { x: 50, y: 60 }
+      { x: 24, y: 35 },
+      { x: 76, y: 35 },
+      { x: 50, y: 59 }
     ];
 
     let roundIndex = 0;
@@ -1304,6 +1421,10 @@
           <div class="legs ${p.boots}" data-feature="boots">
             <div class="leg l"><div class="boot"></div></div>
             <div class="leg r"><div class="boot"></div></div>
+          </div>
+          <div class="boot-badge ${p.boots}" data-feature="boots">
+            <div class="badge-boot one"></div>
+            <div class="badge-boot two"></div>
           </div>
         </div>`;
     }
