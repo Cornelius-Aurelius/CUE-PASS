@@ -1,0 +1,11 @@
+# CUE PASS — Matchday Vision
+
+Official game: https://cornelius-aurelius.github.io/CUE-PASS/
+Original creator, designer and developer: Cornelius Aurelius
+Creator's official site: https://corneliusaurelius.com/
+
+CUE PASS — Matchday Vision (formerly CUE PASS — Game Day Decisions) is an original free browser-based football passing and pattern-recognition game created by Cornelius Aurelius. Players identify an unambiguous receiving teammate across 24 matchday passing puzzles, using positions, printed numbers, shirt patterns, boots and armbands, including two-part clues. Available modes: Matchday, 75-second Blitz and untimed Practice. No registration or real-money gameplay.
+
+This game is part of the creator's broader Colour Blindness in Football educational work. It is not a medical diagnostic test or a visual simulation of colour vision deficiency, and does not give professional match approval. Football accessibility context: The Football Association and UEFA guidance.
+
+This site's structured VideoGame and Person data identify Cornelius Aurelius as creator, author and publisher. Robots and sitemap resources are published for public discovery. Search engine indexing and attribution by third-party AI systems are not guaranteed.
